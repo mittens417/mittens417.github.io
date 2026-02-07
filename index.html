@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Surprise</title>
+    <title>For Julia</title>
     <style>
         /* --- CSS Styles --- */
         body {
@@ -46,6 +46,8 @@
             font-weight: bold;
             background-color: #ff4d6d;
             color: white;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn:hover {
@@ -53,40 +55,41 @@
             background-color: #d63353;
         }
 
-        /* Disabled Button Style (Locked) */
+        /* Locked Button Style */
         .btn-locked {
-            background-color: #ccc;
+            background-color: #bdc3c7; /* Grey */
             cursor: not-allowed;
             box-shadow: none;
+            color: #7f8c8d;
             transform: none !important;
         }
 
         /* --- COUNTDOWN STYLES --- */
-        #countdown-display {
-            display: flex;
-            justify-content: center;
+        .timer-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px auto;
+            display: inline-flex;
             gap: 15px;
-            margin: 30px 0;
-            font-weight: bold;
-            color: #ff4d6d;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .time-box {
-            background: white;
-            padding: 10px;
-            border-radius: 10px;
-            min-width: 60px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
         .time-box span {
             display: block;
-            font-size: 2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff4d6d;
         }
 
         .time-box label {
-            font-size: 0.8rem;
-            color: #888;
+            font-size: 0.7rem;
+            color: #555;
+            text-transform: uppercase;
         }
 
         /* --- CAROUSEL STYLES --- */
@@ -94,4 +97,216 @@
             position: relative;
             max-width: 100%;
             margin: auto;
-            border-radius:
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: white;
+            padding: 10px;
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 15px;
+            display: block;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        .next { right: 0; border-radius: 3px 0 0 3px; }
+        .prev { left: 0; border-radius: 3px 0 0 3px; }
+        .prev:hover, .next:hover { background-color: rgba(255, 77, 109, 0.8); }
+
+        /* --- ANIMATIONS --- */
+        .hidden { display: none; }
+        .fade-in { animation: fadeIn 1.5s ease; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- FLOATING HEARTS --- */
+        .heart {
+            position: absolute;
+            bottom: -100px;
+            background-color: #ffb3c1;
+            width: 20px;
+            height: 20px;
+            transform: rotate(45deg);
+            animation: floatUp 10s linear infinite;
+            opacity: 0;
+            z-index: 1;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ffb3c1;
+            border-radius: 50%;
+        }
+        .heart::before { top: -10px; left: 0; }
+        .heart::after { left: -10px; top: 0; }
+
+        @keyframes floatUp {
+            0% { bottom: -100px; opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { bottom: 100vh; opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div class="container" id="page-1">
+        <h1>Will you be my Valentine? 💐</h1>
+        <button class="btn" onclick="goToPage2()">Yes</button>
+    </div>
+
+    <div class="container hidden" id="page-2">
+        <h1>I love you, Julia ❤️</h1>
+        
+        <div class="timer-container" id="timer-box">
+            <div class="time-box"><span id="days">0</span><label>Days</label></div>
+            <div class="time-box"><span id="hours">0</span><label>Hrs</label></div>
+            <div class="time-box"><span id="minutes">0</span><label>Mins</label></div>
+            <div class="time-box"><span id="seconds">0</span><label>Secs</label></div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button id="unlock-btn" class="btn btn-locked" onclick="goToPage3()" disabled>
+                🔒 Click me on Valentine's Day
+            </button>
+        </div>
+        
+        <p style="margin-top: 15px; color: #7f8c8d; font-size: 0.9rem;">(Waiting for Feb 14, 2026)</p>
+    </div>
+
+    <div class="container hidden" id="page-3">
+        <h1>Happy Valentine's Day! 💝</h1>
+        
+        <div class="carousel">
+            <div class="carousel-slide fade-in">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800&auto=format&fit=crop" alt="Memory 1">
+            </div>
+            <div class="carousel-slide fade-in">
+                <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800&auto=format&fit=crop" alt="Memory 2">
+            </div>
+            <div class="carousel-slide fade-in">
+                <img src="https://media.giphy.com/media/26BRv0ThflsKCqLXG/giphy.gif" alt="Funny GIF">
+            </div>
+
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        // The date the button unlocks
+        const targetDate = new Date("February 14, 2026 00:00:00").getTime();
+
+        // --- PAGE NAVIGATION ---
+        function goToPage2() {
+            document.getElementById('page-1').classList.add('hidden');
+            document.getElementById('page-2').classList.remove('hidden');
+            document.getElementById('page-2').classList.add('fade-in');
+            
+            // Start the countdown logic immediately
+            startTimer();
+        }
+
+        function goToPage3() {
+            document.getElementById('page-2').classList.add('hidden');
+            document.getElementById('page-3').classList.remove('hidden');
+            document.getElementById('page-3').classList.add('fade-in');
+            showSlides(slideIndex);
+        }
+
+        // --- COUNTDOWN LOGIC ---
+        function startTimer() {
+            const timerInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                // If timer is finished (or we are past the date)
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    unlockButton();
+                    return;
+                }
+
+                // Calculation
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Update HTML
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("minutes").innerText = minutes;
+                document.getElementById("seconds").innerText = seconds;
+
+            }, 1000);
+        }
+
+        function unlockButton() {
+            const btn = document.getElementById("unlock-btn");
+            const timerBox = document.getElementById("timer-box");
+            
+            // Visual updates
+            timerBox.style.display = "none"; // Hide the timer
+            btn.disabled = false; // Enable clicks
+            btn.classList.remove("btn-locked");
+            btn.innerHTML = "🎁 Open Your Gift!";
+            btn.style.animation = "pulse 1.5s infinite"; // Simple pulse effect
+        }
+
+        // --- CAROUSEL LOGIC ---
+        let slideIndex = 1;
+        function plusSlides(n) { showSlides(slideIndex += n); }
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("carousel-slide");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        // --- BACKGROUND HEARTS ---
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = Math.random() * 3 + 7 + "s";
+                heart.style.animationDelay = Math.random() * 5 + "s";
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+    </script>
+</body>
+</html>
