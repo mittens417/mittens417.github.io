@@ -22,11 +22,13 @@
             text-align: center;
             position: relative;
             z-index: 10;
+            width: 90%;
+            max-width: 600px;
         }
 
         h1 {
             color: #ff4d6d;
-            font-size: 3.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             animation: fadeIn 2s ease-in;
@@ -60,18 +62,76 @@
             box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
         }
 
-        /* Hidden message that appears after clicking */
-        #success-message {
-            display: none;
-            color: #ff4d6d;
-            font-size: 2rem;
-            animation: popUp 0.5s ease;
+        /* --- CAROUSEL STYLES --- */
+        #success-container {
+            display: none; /* Hidden by default */
+            animation: popUp 0.8s ease;
         }
 
-        #success-message img {
-            max-width: 300px;
+        .carousel {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: white;
+            padding: 10px;
+        }
+
+        .carousel-slide {
+            display: none; /* Hide all slides by default */
+            width: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 400px; /* Fixed height for consistency */
+            object-fit: cover; /* Ensures image covers area without stretching */
             border-radius: 15px;
-            margin-top: 20px;
+            display: block;
+        }
+
+        /* Navigation Arrows */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(255, 77, 109, 0.8);
+        }
+
+        /* Fade animation for slides */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4} 
+            to {opacity: 1}
         }
 
         /* --- Floating Hearts Animation --- */
@@ -102,15 +162,13 @@
             50% { opacity: 0.6; }
             100% { bottom: 100vh; opacity: 0; }
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes popUp {
-            from { transform: scale(0); }
-            to { transform: scale(1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popUp { from { transform: scale(0); } to { transform: scale(1); } }
+        
+        /* Mobile adjustment */
+        @media only screen and (max-width: 600px) {
+            .carousel-slide img { height: 300px; }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -118,32 +176,67 @@
 
     <div id="hearts-container"></div>
 
-    <div class="container" id="main-content">
+    <div class="container" id="question-container">
         <h1>Will you be my Valentine? 💐</h1>
-        
         <div class="buttons">
             <button class="btn yes-btn" onclick="sayYes()">Yes</button>
         </div>
     </div>
 
-    <div class="container" id="success-message">
+    <div class="container" id="success-container">
         <h1>Yay! I love you! ❤️</h1>
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QyZzZ5aW12eW12eW12eW12eW12eW12eW12eW12eW12/26BRv0ThflsKCqLXG/giphy.gif" alt="Happy Bears">
+        
+        <div class="carousel">
+            <div class="carousel-slide fade">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800&auto=format&fit=crop" alt="Cute Cat">
+            </div>
+
+            <div class="carousel-slide fade">
+                <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800&auto=format&fit=crop" alt="Cute Dog">
+            </div>
+
+            <div class="carousel-slide fade">
+                <img src="https://media.giphy.com/media/26BRv0ThflsKCqLXG/giphy.gif" alt="Funny GIF">
+            </div>
+
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
     </div>
 
     <script>
-        // JavaScript for interactivity
+        // --- LOGIC TO SWITCH PAGES ---
         function sayYes() {
-            // Hide the question
-            document.getElementById('main-content').style.display = 'none';
-            // Show the success message
-            document.getElementById('success-message').style.display = 'block';
-            
-            // Trigger confetti (optional simple effect)
+            document.getElementById('question-container').style.display = 'none';
+            document.getElementById('success-container').style.display = 'block';
             document.body.style.backgroundColor = "#fff0f3";
+            showSlides(slideIndex); // Initialize carousel
         }
 
-        // Generate background hearts
+        // --- CAROUSEL LOGIC ---
+        let slideIndex = 1;
+
+        // Next/previous controls
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("carousel-slide");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            // Hide all slides
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            
+            // Show the active slide
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        // --- BACKGROUND HEARTS ---
         function createHearts() {
             const container = document.getElementById('hearts-container');
             for (let i = 0; i < 15; i++) {
