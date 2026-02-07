@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Julia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
         /* --- CSS Styles --- */
         body {
@@ -14,11 +15,23 @@
             align-items: center;
             height: 100vh;
             background-color: #ffe6e9; /* Soft Pink Background */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Playfair Display', serif; /* Elegant for body text */
             overflow: hidden;
             flex-direction: column;
         }
-
+        
+        .caption {
+            color: #ff4d6d;
+            font-size: 1.2rem;
+            padding: 15px;
+            text-align: center;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.9);
+            margin-top: -5px; /* Pulls it up to connect with image */
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+        
         .container {
             text-align: center;
             position: relative;
@@ -29,6 +42,8 @@
 
         h1 {
             color: #ff4d6d;
+            font-family: 'Dancing Script', cursive; /* Handwritten for headers */
+            letter-spacing: 2px;
             font-size: 2.5rem;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
@@ -92,7 +107,7 @@
             text-transform: uppercase;
         }
 
-        /* --- CAROUSEL STYLES --- */
+        /* --- CAROUSEL S --- */
         .carousel {
             position: relative;
             max-width: 100%;
@@ -171,9 +186,13 @@
             50% { opacity: 0.6; }
             100% { bottom: 100vh; opacity: 0; }
         }
-    </style>
+    </>
 </head>
 <body>
+    
+    <audio id="bg-music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="hearts-container"></div>
 
@@ -203,46 +222,61 @@
 
     <div class="container hidden" id="page-3">
         <h1>Happy Valentine's Day! 💝</h1>
-        
+        <div class="love-letter" style="max-width: 500px; margin: 0 auto 20px auto; line-height: 1.6; color: #555;">
+            <p>"Hi Love, I set this timer because some things are worth waiting for. Every second that ticks by is one second closer to our forever. I hope this makes you happy this Valentine's Day. Here are some of my favorite moments so far..."</p>
+        </div>
         <div class="carousel">
             <div class="carousel-slide fade-in">
                 <img src="IMG_0935.jpg" alt="First date">
+                <div class="caption">Our first date together 📽️</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_0933.jpg" alt="First date">
+                <div class="caption">Official beer bud?? 🍻</div>
             </div> 
             <div class="carousel-slide fade-in">
                 <img src="IMG_0970.jpg" alt="Motorcycle date">
+                <div class="caption">First rodeo! (nangalay) 🏍️</div>
             </div>
-            <div class="carousel-slide fade-in">
-            <img src="IMG_1102.jpg" alt="Hirono!!">
+                <div class="carousel-slide fade-in">
+                <img src="IMG_1102.jpg" alt="Hirono!!">
+                <div class="caption">Hirono!!!!</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_1378.jpg" alt="First sleepover">
+                <div class="caption">First sleepover! 💤</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_1404.jpg" alt="Halloween madness">
+                <div class="caption">Chucky na gutom</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_1410.jpg" alt="Halloween madness">
+                <div class="caption">Halloween madness 🎃</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_1647.jpg" alt="Cabin">
+                <div class="caption">Cabin moments 💓</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_1928.jpg" alt="Car moments">
+                <div class="caption">Intimate car rides 🧑‍❤️‍💋‍👩</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_1932.jpg" alt="Car moments">
+                <div class="caption">Intimate car rides pt 2 🧑‍❤️‍💋‍👩</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_1990.jpg" alt="Last day">
+                <div class="caption">Last Night on Earth????</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_1993.JPG" alt="Last day">
+                <div class="caption">Last Night on Earth pt 2</div>
             </div>
             <div class="carousel-slide fade-in">
                 <img src="IMG_2622.PNG" alt="Cutest moment together <3">
+                <div class="caption">Cutest moment together ❤️</div>
             </div>
 
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -265,6 +299,7 @@
             document.getElementById('page-1').classList.add('hidden');
             document.getElementById('page-2').classList.remove('hidden');
             document.getElementById('page-2').classList.add('fade-in');
+            document.getElementById('bg-music').play();
             
             // Start the countdown logic immediately
             startTimer();
