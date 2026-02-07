@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        /* --- CSS Styles --- */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6e9; /* Soft Pink Background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeIn 2s ease-in;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        .btn {
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        /* The YES Button Style */
+        .yes-btn {
+            background-color: #ff4d6d;
+            color: white;
+            margin-right: 20px;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            background-color: #d63353;
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+        }
+
+        /* Hidden message that appears after clicking */
+        #success-message {
+            display: none;
+            color: #ff4d6d;
+            font-size: 2rem;
+            animation: popUp 0.5s ease;
+        }
+
+        #success-message img {
+            max-width: 300px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        /* --- Floating Hearts Animation --- */
+        .heart {
+            position: absolute;
+            bottom: -100px;
+            background-color: #ffb3c1;
+            width: 20px;
+            height: 20px;
+            transform: rotate(45deg);
+            animation: floatUp 10s linear infinite;
+            opacity: 0;
+            z-index: 1;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ffb3c1;
+            border-radius: 50%;
+        }
+        .heart::before { top: -10px; left: 0; }
+        .heart::after { left: -10px; top: 0; }
+
+        @keyframes floatUp {
+            0% { bottom: -100px; opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { bottom: 100vh; opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div class="container" id="main-content">
+        <h1>Will you be my Valentine? 💐</h1>
+        
+        <div class="buttons">
+            <button class="btn yes-btn" onclick="sayYes()">Yes</button>
+        </div>
+    </div>
+
+    <div class="container" id="success-message">
+        <h1>Yay! I love you! ❤️</h1>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QyZzZ5aW12eW12eW12eW12eW12eW12eW12eW12eW12/26BRv0ThflsKCqLXG/giphy.gif" alt="Happy Bears">
+    </div>
+
+    <script>
+        // JavaScript for interactivity
+        function sayYes() {
+            // Hide the question
+            document.getElementById('main-content').style.display = 'none';
+            // Show the success message
+            document.getElementById('success-message').style.display = 'block';
+            
+            // Trigger confetti (optional simple effect)
+            document.body.style.backgroundColor = "#fff0f3";
+        }
+
+        // Generate background hearts
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = Math.random() * 3 + 7 + "s";
+                heart.style.animationDelay = Math.random() * 5 + "s";
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+    </script>
+</body>
+</html>
