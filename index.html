@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
+    <title>Valentine's Surprise</title>
     <style>
         /* --- CSS Styles --- */
         body {
@@ -16,6 +16,7 @@
             background-color: #ffe6e9; /* Soft Pink Background */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
+            flex-direction: column;
         }
 
         .container {
@@ -28,227 +29,69 @@
 
         h1 {
             color: #ff4d6d;
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            animation: fadeIn 2s ease-in;
         }
 
-        .buttons {
-            margin-top: 30px;
-        }
-
+        /* --- BUTTON STYLES --- */
         .btn {
-            font-size: 1.5rem;
-            padding: 15px 40px;
+            font-size: 1.2rem;
+            padding: 15px 30px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             font-weight: bold;
-        }
-
-        /* The YES Button Style */
-        .yes-btn {
             background-color: #ff4d6d;
             color: white;
-            margin-right: 20px;
         }
 
-        .yes-btn:hover {
-            transform: scale(1.1);
+        .btn:hover {
+            transform: scale(1.05);
             background-color: #d63353;
-            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+        }
+
+        /* Disabled Button Style (Locked) */
+        .btn-locked {
+            background-color: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none !important;
+        }
+
+        /* --- COUNTDOWN STYLES --- */
+        #countdown-display {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            font-weight: bold;
+            color: #ff4d6d;
+        }
+
+        .time-box {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            min-width: 60px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2rem;
+        }
+
+        .time-box label {
+            font-size: 0.8rem;
+            color: #888;
         }
 
         /* --- CAROUSEL STYLES --- */
-        #success-container {
-            display: none; /* Hidden by default */
-            animation: popUp 0.8s ease;
-        }
-
         .carousel {
             position: relative;
             max-width: 100%;
             margin: auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            background: white;
-            padding: 10px;
-        }
-
-        .carousel-slide {
-            display: none; /* Hide all slides by default */
-            width: 100%;
-        }
-
-        .carousel-slide img {
-            width: 100%;
-            height: 400px; /* Fixed height for consistency */
-            object-fit: cover; /* Ensures image covers area without stretching */
-            border-radius: 15px;
-            display: block;
-        }
-
-        /* Navigation Arrows */
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -22px;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.6s ease;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-            background-color: rgba(0,0,0,0.3);
-        }
-
-        .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        .prev {
-            left: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        .prev:hover, .next:hover {
-            background-color: rgba(255, 77, 109, 0.8);
-        }
-
-        /* Fade animation for slides */
-        .fade {
-            animation-name: fade;
-            animation-duration: 1.5s;
-        }
-
-        @keyframes fade {
-            from {opacity: .4} 
-            to {opacity: 1}
-        }
-
-        /* --- Floating Hearts Animation --- */
-        .heart {
-            position: absolute;
-            bottom: -100px;
-            background-color: #ffb3c1;
-            width: 20px;
-            height: 20px;
-            transform: rotate(45deg);
-            animation: floatUp 10s linear infinite;
-            opacity: 0;
-            z-index: 1;
-        }
-        .heart::before, .heart::after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #ffb3c1;
-            border-radius: 50%;
-        }
-        .heart::before { top: -10px; left: 0; }
-        .heart::after { left: -10px; top: 0; }
-
-        @keyframes floatUp {
-            0% { bottom: -100px; opacity: 0; }
-            50% { opacity: 0.6; }
-            100% { bottom: 100vh; opacity: 0; }
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes popUp { from { transform: scale(0); } to { transform: scale(1); } }
-        
-        /* Mobile adjustment */
-        @media only screen and (max-width: 600px) {
-            .carousel-slide img { height: 300px; }
-            h1 { font-size: 2rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <div id="hearts-container"></div>
-
-    <div class="container" id="question-container">
-        <h1>Will you be my Valentine? 💐</h1>
-        <div class="buttons">
-            <button class="btn yes-btn" onclick="sayYes()">Yes</button>
-        </div>
-    </div>
-
-    <div class="container" id="success-container">
-        <h1>Yay! I love you! ❤️</h1>
-        
-        <div class="carousel">
-            <div class="carousel-slide fade">
-                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800&auto=format&fit=crop" alt="Cute Cat">
-            </div>
-
-            <div class="carousel-slide fade">
-                <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800&auto=format&fit=crop" alt="Cute Dog">
-            </div>
-
-            <div class="carousel-slide fade">
-                <img src="https://media.giphy.com/media/26BRv0ThflsKCqLXG/giphy.gif" alt="Funny GIF">
-            </div>
-
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        </div>
-    </div>
-
-    <script>
-        // --- LOGIC TO SWITCH PAGES ---
-        function sayYes() {
-            document.getElementById('question-container').style.display = 'none';
-            document.getElementById('success-container').style.display = 'block';
-            document.body.style.backgroundColor = "#fff0f3";
-            showSlides(slideIndex); // Initialize carousel
-        }
-
-        // --- CAROUSEL LOGIC ---
-        let slideIndex = 1;
-
-        // Next/previous controls
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("carousel-slide");
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-            
-            // Hide all slides
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            
-            // Show the active slide
-            slides[slideIndex-1].style.display = "block";
-        }
-
-        // --- BACKGROUND HEARTS ---
-        function createHearts() {
-            const container = document.getElementById('hearts-container');
-            for (let i = 0; i < 15; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.style.left = Math.random() * 100 + "vw";
-                heart.style.animationDuration = Math.random() * 3 + 7 + "s";
-                heart.style.animationDelay = Math.random() * 5 + "s";
-                container.appendChild(heart);
-            }
-        }
-        createHearts();
-    </script>
-</body>
-</html>
+            border-radius:
