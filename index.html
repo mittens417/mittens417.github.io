@@ -13,10 +13,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #ffe6e9; /* Soft Pink Background */
             font-family: 'Playfair Display', serif; /* Elegant for body text */
-            overflow: hidden;
+            overflow: auto;
             flex-direction: column;
         }
         
@@ -38,6 +38,7 @@
             z-index: 10;
             width: 90%;
             max-width: 600px;
+            padding-bottom: 50px; /* ADD THIS LINE */
         }
 
         h1 {
@@ -160,7 +161,7 @@
 
         /* --- FLOATING HEARTS --- */
         .heart {
-            position: absolute;
+            position: fixed;    /* CHANGE THIS (was absolute) */
             bottom: -100px;
             background-color: #ffb3c1;
             width: 20px;
@@ -172,7 +173,7 @@
         }
         .heart::before, .heart::after {
             content: "";
-            position: absolute;
+            position: fixed;    /* CHANGE THIS (was absolute) */
             width: 20px;
             height: 20px;
             background-color: #ffb3c1;
